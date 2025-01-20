@@ -1,0 +1,174 @@
+/* 1. Create a responsive webpage with the following features: a. A fixed navbar that does not move when scrolling. b. Below the navbar, create three sections: a left menu, a main content area, and a right-side panel. c. Include a footer at the bottom.
+d. Make the left menu collapsible. */
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Webpage</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            z-index: 1000;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: row;
+            margin-top: 60px;
+            /* to account for fixed navbar */
+            height: calc(100vh - 100px);
+            /* full height minus navbar and footer */
+        }
+        
+        .left-menu {
+            width: 20%;
+            background-color: #f4f4f4;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 1rem;
+            background-color: #fff;
+            overflow-y: auto;
+        }
+        
+        .right-panel {
+            width: 20%;
+            background-color: #f9f9f9;
+            padding: 1rem;
+            overflow-y: auto;
+        }
+        
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        
+        .toggle-button {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .left-menu {
+                position: fixed;
+                left: -250px;
+                top: 60px;
+                height: calc(100vh - 60px);
+                transition: left 0.3s ease;
+                z-index: 1000;
+            }
+            .left-menu.open {
+                left: 0;
+            }
+            .toggle-button {
+                display: block;
+                margin: 1rem;
+                background-color: #333;
+                color: white;
+                padding: 0.5rem 1rem;
+                border: none;
+                cursor: pointer;
+            }
+            .container {
+                flex-direction: column;
+            }
+            .main-content {
+                flex: none;
+                order: 2;
+            }
+            .right-panel {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">Responsive Webpage Navbar</div>
+
+    <div class="container">
+        <button class="toggle-button" onclick="toggleMenu()">Toggle Menu</button>
+        <div class="left-menu" id="leftMenu">
+            <h3>Menu</h3>
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <h1>Main Content</h1>
+            <p>This is the main content area.</p>
+        </div>
+
+        <div class="right-panel">
+            <h3>Right Panel</h3>
+            <p>Additional content goes here.</p>
+        </div>
+    </div>
+
+    <div class="footer">Footer Section</div>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('leftMenu');
+            menu.classList.toggle('open');
+        }
+
+        /*
+         Added a JavaScript function, adjustPageWidth, to handle the scaling requirements based on screen width.
+         */
+        function adjustPageWidth() {
+            const width = window.innerWidth;
+            let scale = 1;
+
+            if (width <= 600) {
+                scale = 0.5;
+            } else if (width > 600 && width <= 700) {
+                scale = 0.75;
+            } else if (width > 700 && width <= 767) {
+                scale = 0.8;
+            } else if (width >= 992 && width <= 1600) {
+                scale = 0.9;
+            }
+
+            document.body.style.transform = `scale(${scale})`;
+            document.body.style.transformOrigin = '0 0';
+        }
+
+        window.addEventListener('resize', adjustPageWidth);
+        window.addEventListener('load', adjustPageWidth);
+    </script>
+
+</body>
+
+</html>
